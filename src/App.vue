@@ -29,6 +29,11 @@
                 </table>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col>
+                <DonorMessageForm></DonorMessageForm>
+              </v-col>
+            </v-row>
           </v-container>
         </section>
       </v-sheet>
@@ -37,33 +42,29 @@
 </template>
 
 <script>
-import axios from "axios";
 import DonorTable from "./components/Donor-table.vue";
 import ProgressBar from "./components/Progress-bar.vue";
+import DonorMessageForm from "./components/Donor-message-form.vue";
+
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "App",
   components: {
     DonorTable,
     ProgressBar,
+    DonorMessageForm,
   },
   data() {
     return {
-      donors: null,
       isActionRunning: false,
     };
   },
-  mounted() {
-    this.isActionRunning = true;
-    axios.get("https://interview.ribbon.giving/api/donors").then((response) => {
-      this.donors = response.data;
-      this.isActionRunning = false;
-    });
+  computed: {
+    ...mapGetters(["donors", "isAsyncActionRunning"]),
   },
-  methods: {
-    async submit() {
-      // Send message to server.
-    },
+  mounted() {
+    this.$store.dispatch("fetchDonors");
   },
 };
 </script>

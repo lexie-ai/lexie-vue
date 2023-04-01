@@ -16,7 +16,7 @@ export default {
   computed: {
     filteredDonors() {
       return this.items.filter((donor) => {
-        return donor.full_name.toLowerCase().includes(this.searchQuery.toLowerCase());
+        return donor.email.toLowerCase().includes(this.searchQuery.toLowerCase());
       });
     },
   },
@@ -24,6 +24,7 @@ export default {
     return {
       searchQuery: "",
       headers: [
+        { text: "ID", value: "id" },
         { text: "Name", value: "full_name" },
         { text: "Email", value: "email" },
         { text: "Total Donations", value: "total_donations" },
@@ -42,10 +43,5 @@ body {
 }
 .table tr:hover {
   background-color: rgba(58, 58, 64, 0.03);
-}
-.progress-bar {
-  height: 5px;
-  background-color: #00754A;
-  transition: width 0.5s;
 }
 </style>
